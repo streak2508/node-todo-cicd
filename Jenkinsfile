@@ -1,25 +1,23 @@
 pipeline {
-    agent { label "dev-server"}
-    
+    agent any
+     environment {
+        IMAGE_TAG = "${BUILD_NUMBER}"
+    }
     stages {
         
         stage("code"){
             steps{
                 git url: "https://github.com/LondheShubham153/node-todo-cicd.git", branch: "master"
-                echo 'bhaiyya code clone ho gaya'
+                echo 'code clone ho gaya'
             }
         }
         stage("build and test"){
             steps{
-                sh "docker build -t node-app-test-new ."
+                sh "docker build -t my-node-app:${BUILD_NUMBER} ."
                 echo 'code build bhi ho gaya'
             }
         }
-        stage("scan image"){
-            steps{
-                echo 'image scanning ho gayi'
-            }
-        }
+        
         stage("push"){
             steps{
                 withCredentials([usernamePassword(credentialsId:"dockerHub",passwordVariable:"dockerHubPass",usernameVariable:"dockerHubUser")]){
