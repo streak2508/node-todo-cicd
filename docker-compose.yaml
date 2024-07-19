@@ -1,6 +1,4 @@
 version: '3.9'
-environment {
-        IMAGE_TAG = "${BUILD_NUMBER}"}
 services:
   web:
     image: "streak2508/my-node-app:${BUILD_NUMBER}"
